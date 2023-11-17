@@ -20,3 +20,22 @@ provide them with easy access to financial services.
 - The transactions would be secured since just getting  the fingerprints would not help the attackers. They would require a private key along with the fingerprints to carryout the frauds.
 
 - The hash of the fingerprint data would be used for the transactions, so even if there is slightest of chance of Man in the Middle attack, and the attacker getting the hash but there is no chance of getting the original data since hash is irreversible.
+
+# Encryption Concepts to gain knowledge for this Project
+- Public key cryptography
+- Digital signatures to authenticate owner.
+- Hash
+- Biometric Template
+- Authentication(Identity) + Authorization(Access management)
+
+## Technologies in use
+
+- Solidity
+- JavaScript
+  * React.js
+  * Web3.js
+  * Node.js
+  * Express.js
+- Truffle
+- Ganache
+- Metamask

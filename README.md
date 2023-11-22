@@ -39,3 +39,10 @@ provide them with easy access to financial services.
 - Truffle
 - Ganache
 - Metamask
+
+# Flowcharts
+
+![user registration ](https://github.com/ss4Digbijoy/FINAL_YEAR_PROJECT_ON_CYBER_SECUIRITY/assets/97974553/54584439-d177-434f-935f-bec8da35aec9)
+
+![transaction ](https://github.com/ss4Digbijoy/FINAL_YEAR_PROJECT_ON_CYBER_SECUIRITY/assets/97974553/e7e286f7-f5b1-4ac6-b711-70362a51745b)
+

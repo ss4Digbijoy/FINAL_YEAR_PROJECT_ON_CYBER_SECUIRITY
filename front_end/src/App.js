@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import Web3 from 'web3';
-import User from './UserManagement.json';
  
 
 const App = () => {
@@ -32,8 +31,94 @@ const App = () => {
                 await window.ethereum.enable();
 
                 setWeb3(web3Instance);         
+                const UserManagementABI= [
+                  {
+                    "inputs": [],
+                    "name": "getBalance",
+                    "outputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                      }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                  },
+                  {
+                    "inputs": [],
+                    "name": "getTransactions",
+                    "outputs": [
+                      {
+                        "components": [
+                          {
+                            "internalType": "uint256",
+                            "name": "senderId",
+                            "type": "uint256"
+                          },
+                          {
+                            "internalType": "uint256",
+                            "name": "recipientId",
+                            "type": "uint256"
+                          },
+                          {
+                            "internalType": "uint256",
+                            "name": "amount",
+                            "type": "uint256"
+                          },
+                          {
+                            "internalType": "uint256",
+                            "name": "date",
+                            "type": "uint256"
+                          }
+                        ],
+                        "internalType": "struct UserManagement.Transaction[]",
+                        "name": "",
+                        "type": "tuple[]"
+                      }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                  },
+                  {
+                    "inputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "_uniqueId",
+                        "type": "uint256"
+                      },
+                      {
+                        "internalType": "string",
+                        "name": "_name",
+                        "type": "string"
+                      }
+                    ],
+                    "name": "register",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                  },
+                  {
+                    "inputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "_recipientId",
+                        "type": "uint256"
+                      },
+                      {
+                        "internalType": "uint256",
+                        "name": "_amount",
+                        "type": "uint256"
+                      }
+                    ],
+                    "name": "transfer",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                  }
+                ];
 
-                const contractInstance = new web3Instance.eth.Contract(User.abi, User.deployedAddress[0]);
+                const contractInstance = new web3Instance.eth.Contract(UserManagementABI, '0xbe3cd86E9bdea35563F220CF96E2399364efc150');
 
                 setContract(contractInstance);
                 setMessage('Done Connecting');
@@ -58,8 +143,94 @@ const App = () => {
                 await window.ethereum.enable();
 
                 setWeb3(web3Instance);         
+                const Userabi= [
+                  {
+                    "inputs": [],
+                    "name": "getBalance",
+                    "outputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                      }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                  },
+                  {
+                    "inputs": [],
+                    "name": "getTransactions",
+                    "outputs": [
+                      {
+                        "components": [
+                          {
+                            "internalType": "uint256",
+                            "name": "senderId",
+                            "type": "uint256"
+                          },
+                          {
+                            "internalType": "uint256",
+                            "name": "recipientId",
+                            "type": "uint256"
+                          },
+                          {
+                            "internalType": "uint256",
+                            "name": "amount",
+                            "type": "uint256"
+                          },
+                          {
+                            "internalType": "uint256",
+                            "name": "date",
+                            "type": "uint256"
+                          }
+                        ],
+                        "internalType": "struct UserManagement.Transaction[]",
+                        "name": "",
+                        "type": "tuple[]"
+                      }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                  },
+                  {
+                    "inputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "_uniqueId",
+                        "type": "uint256"
+                      },
+                      {
+                        "internalType": "string",
+                        "name": "_name",
+                        "type": "string"
+                      }
+                    ],
+                    "name": "register",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                  },
+                  {
+                    "inputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "_recipientId",
+                        "type": "uint256"
+                      },
+                      {
+                        "internalType": "uint256",
+                        "name": "_amount",
+                        "type": "uint256"
+                      }
+                    ],
+                    "name": "transfer",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                  }
+                ];
 
-                const contractInstance = new web3Instance.eth.Contract(User.abi, User.deployedAddress[0]);
+                const contractInstance = new web3Instance.eth.Contract(Userabi, '0xbe3cd86E9bdea35563F220CF96E2399364efc150');
 
                 setContract(contractInstance);
                 setMessage('Done Connecting');

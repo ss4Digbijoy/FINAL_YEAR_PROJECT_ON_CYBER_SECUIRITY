@@ -3,11 +3,11 @@ pragma solidity ^0.8.0;
 
 contract UserManagement {
     struct User {
-        uint uniqueId;
+        
         address userAddress;
         string name;
-        uint balance;
         bool registered;
+        string fingerprintHash;
     }
     
     struct Transaction {
@@ -25,32 +25,36 @@ contract UserManagement {
         require(users[_uniqueId].registered, "User not registered");
         _;
     }
+    modifier onlyRegisteredAddress(address _useradd) {
+        require(addressToId[_useradd]!=0, "User not registered");
+        _;
+    }
     
-    function register(uint _uniqueId, string memory _name) public {
+    function register(uint _uniqueId, string memory _name, string memory _fingerprintHash) public {
+        require(_uniqueId!=0, "0 NOT ALLOWED AS AADHAR NO");
         require(!users[_uniqueId].registered, "Aadhar user already registered");
         require(addressToId[msg.sender] == 0, "Your address is already registered");
         
-        users[_uniqueId] = User(_uniqueId, msg.sender, _name, 100, true);
+        users[_uniqueId] = User( msg.sender, _name, true, _fingerprintHash); // Store fingerprint hash
         addressToId[msg.sender] = _uniqueId;
     }
     
-    function transfer(uint _recipientId, uint _amount) public onlyRegisteredUser(addressToId[msg.sender]) onlyRegisteredUser(_recipientId) {
+    function transfer(uint _recipientId, string memory _fingerprintHash) payable public onlyRegisteredAddress(msg.sender) onlyRegisteredUser(_recipientId) {
         uint senderId = addressToId[msg.sender];
+        address receiver=users[_recipientId].userAddress;
+        require(keccak256(abi.encode(users[senderId].fingerprintHash ))== keccak256(abi.encode(_fingerprintHash)), "Fingerprint verification failed"); // Verify fingerprint
         
-        require(users[senderId].balance >= _amount, "Insufficient balance");
+        require(msg.value <= msg.sender.balance, "Insufficient balance");
+        payable(receiver).transfer(msg.value);
         
-        users[senderId].balance -= _amount;
-        users[_recipientId].balance += _amount;
-        
-        transactions.push(Transaction(senderId, _recipientId, _amount, block.timestamp));
+        transactions.push(Transaction(senderId, _recipientId, msg.value, block.timestamp));
     }
     
-    function getBalance() public view onlyRegisteredUser(addressToId[msg.sender]) returns (uint) {
-        uint userId = addressToId[msg.sender];
-        return users[userId].balance;
+    function getBalance() public view onlyRegisteredAddress(msg.sender) returns (uint) {
+        return msg.sender.balance;
     }
     
-    function getTransactions() public view onlyRegisteredUser(addressToId[msg.sender]) returns (Transaction[] memory) {
+    function getTransactions() public view onlyRegisteredAddress(msg.sender) returns (Transaction[] memory) {
         uint userId = addressToId[msg.sender];
         uint count = 0;
         for (uint i = 0; i < transactions.length; i++) {
@@ -69,3 +73,4 @@ contract UserManagement {
         return userTransactions;
     }
 }
+
